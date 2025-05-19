@@ -1,0 +1,36 @@
+[project]
+name = "workspace"
+version = "0.1.0"
+description = "Workspace"
+requires-python = "==3.12.5"
+
+dependencies = [
+ "aiohttp==3.11.16",
+ "pandas>=2.2.3",
+ "numpy>=1.26.4",
+ "matplotlib>=3.10.1",
+ "seaborn>=0.13.2",
+ "requests>=2.32.3",
+ "docstring-parser>=0.16",
+ "pyyaml>=6.0.2",
+ "httpx>=0.28.1",
+ "pydantic>=2.10.6",
+ "openpyxl>=3.1.5",
+ "python-docx>=1.1.2",
+ "python-pptx>=1.0.2",
+ "playwright>=1.52.0",
+]
+
+[build-system]
+requires = ["hatchling>=1.18.0"]
+build-backend = "hatchling.build"
+
+[tool.hatch.metadata]
+allow-direct-references = true
+
+[tool.hatch.build.targets.wheel]
+packages = [ "code" ]
+
+[[tool.uv.index]]
+url = "https://mirrors.aliyun.com/pypi/simple"
+default = true
