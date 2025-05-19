@@ -1,18 +1,31 @@
-import { Router } from 'express';
-import { AuthController } from '../controllers/auth.controller';
-import { authenticate } from '../middleware/auth';
+import { Router, Request, Response } from 'express';
 
+// Placeholder controller dengan routes sederhana
 const router = Router();
-const authController = new AuthController();
 
-// Rutas públicas
-router.post('/login', authController.login);
-router.post('/register', authController.register);
+// Placeholder untuk login
+router.post('/login', (_req: Request, res: Response) => {
+  res.json({ message: 'Login endpoint' });
+});
 
-// Rutas protegidas
-router.use(authenticate);
-router.get('/me', authController.getMe);
-router.post('/change-password', authController.changePassword);
-router.post('/logout', authController.logout);
+// Placeholder untuk register
+router.post('/register', (_req: Request, res: Response) => {
+  res.json({ message: 'Register endpoint' });
+});
+
+// Placeholder untuk get me
+router.get('/me', (_req: Request, res: Response) => {
+  res.json({ message: 'Get me endpoint' });
+});
+
+// Placeholder untuk change password
+router.post('/change-password', (_req: Request, res: Response) => {
+  res.json({ message: 'Change password endpoint' });
+});
+
+// Placeholder untuk logout
+router.post('/logout', (_req: Request, res: Response) => {
+  res.json({ message: 'Logout endpoint' });
+});
 
 export default router;

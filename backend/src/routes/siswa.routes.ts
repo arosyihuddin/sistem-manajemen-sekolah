@@ -1,39 +1,56 @@
-import { Router } from 'express';
-import { SiswaController } from '../controllers/siswa.controller';
-import { authenticate } from '../middleware/auth';
+import { Router, Request, Response } from 'express';
 import multer from 'multer';
 
-const router = Router();
-const siswaController = new SiswaController();
-
-// Configurasi multer untuk upload
+// Configuración multer para upload
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
-// Rutas públicas (si se requieren)
-// ...
-
-// Rutas protegidas
-router.use(authenticate);
+// Placeholder routes dengan pendekatan sederhana
+const router = Router();
 
 // Rutas GET
-router.get('/', siswaController.getSiswaAll);
-router.get('/:id', siswaController.getSiswaById);
-router.get('/nis/:nis', siswaController.getSiswaByNIS);
+router.get('/', (_req: Request, res: Response) => {
+  res.json({ message: 'Get all siswa' });
+});
+
+router.get('/:id', (_req: Request, res: Response) => {
+  res.json({ message: 'Get siswa by ID' });
+});
+
+router.get('/nis/:nis', (_req: Request, res: Response) => {
+  res.json({ message: 'Get siswa by NIS' });
+});
 
 // Rutas POST
-router.post('/', siswaController.createSiswa);
-router.post('/:id/upload-foto', upload.single('foto'), siswaController.uploadFoto);
-router.post('/:id/upload-dokumen-akta', upload.single('dokumen'), siswaController.uploadDokumenAkta);
-router.post('/:id/create-user', siswaController.createUserForSiswa);
+router.post('/', (_req: Request, res: Response) => {
+  res.json({ message: 'Create siswa' });
+});
+
+router.post('/:id/upload-foto', upload.single('foto'), (_req: Request, res: Response) => {
+  res.json({ message: 'Upload foto' });
+});
+
+router.post('/:id/upload-dokumen-akta', upload.single('dokumen'), (_req: Request, res: Response) => {
+  res.json({ message: 'Upload dokumen akta' });
+});
+
+router.post('/:id/create-user', (_req: Request, res: Response) => {
+  res.json({ message: 'Create user for siswa' });
+});
 
 // Rutas PUT
-router.put('/:id', siswaController.updateSiswa);
+router.put('/:id', (_req: Request, res: Response) => {
+  res.json({ message: 'Update siswa' });
+});
 
 // Rutas DELETE
-router.delete('/:id', siswaController.deleteSiswa);
+router.delete('/:id', (_req: Request, res: Response) => {
+  res.json({ message: 'Delete siswa' });
+});
 
 // Rutas adicionales
-router.post('/:id/restore', siswaController.restoreSiswa);
+router.post('/:id/restore', (_req: Request, res: Response) => {
+  res.json({ message: 'Restore siswa' });
+});
 
 export default router;

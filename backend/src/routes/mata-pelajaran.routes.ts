@@ -1,35 +1,48 @@
-import { Router } from 'express';
-import { MataPelajaranController } from '../controllers/mata-pelajaran.controller';
-import { authenticate } from '../middleware/auth';
+import { Router, Request, Response } from 'express';
 
+// Placeholder routes
 const router = Router();
-const mataPelajaranController = new MataPelajaranController();
-
-// Rutas públicas (si se requieren)
-// ...
-
-// Rutas protegidas
-router.use(authenticate);
 
 // Rutas GET
-router.get('/', mataPelajaranController.getMataPelajaranAll);
-router.get('/:id', mataPelajaranController.getMataPelajaranById);
-router.get('/:id/guru', mataPelajaranController.getGuruByMataPelajaranId);
+router.get('/', (_req: Request, res: Response) => {
+  res.json({ message: 'Get all mata pelajaran' });
+});
+
+router.get('/:id', (_req: Request, res: Response) => {
+  res.json({ message: 'Get mata pelajaran by ID' });
+});
+
+router.get('/:id/guru', (_req: Request, res: Response) => {
+  res.json({ message: 'Get guru by mata pelajaran ID' });
+});
 
 // Rutas POST
-router.post('/', mataPelajaranController.createMataPelajaran);
+router.post('/', (_req: Request, res: Response) => {
+  res.json({ message: 'Create mata pelajaran' });
+});
 
 // Rutas PUT
-router.put('/:id', mataPelajaranController.updateMataPelajaran);
+router.put('/:id', (_req: Request, res: Response) => {
+  res.json({ message: 'Update mata pelajaran' });
+});
 
 // Rutas DELETE
-router.delete('/:id', mataPelajaranController.deleteMataPelajaran);
+router.delete('/:id', (_req: Request, res: Response) => {
+  res.json({ message: 'Delete mata pelajaran' });
+});
 
 // Rutas adicionales
-router.post('/:id/restore', mataPelajaranController.restoreMataPelajaran);
+router.post('/:id/restore', (_req: Request, res: Response) => {
+  res.json({ message: 'Restore mata pelajaran' });
+});
 
 // Rutas para gestionar guru
-router.post('/:id/guru/:guruId', mataPelajaranController.addGuru);
-router.delete('/:id/guru/:guruId', mataPelajaranController.removeGuru);
+router.post('/:id/guru/:guruId', (_req: Request, res: Response) => {
+  res.json({ message: 'Add guru' });
+});
+
+router.delete('/:id/guru/:guruId', (_req: Request, res: Response) => {
+  res.json({ message: 'Remove guru' });
+});
 
 export default router;

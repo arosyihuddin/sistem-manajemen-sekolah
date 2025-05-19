@@ -48,7 +48,7 @@ app.use('/api/pembayaran', pembayaranRoutes);
 app.use('/api/inventaris', inventarisRoutes);
 
 // Health check route
-app.get('/api/health', (_req, res) => {
+app.get('/api/health', (req, res) => {
   res.status(200).json({ status: 'ok', timestamp: new Date() });
 });
 

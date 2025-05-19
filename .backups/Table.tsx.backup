@@ -103,5 +103,4 @@ function getNestedProperty<T>(obj: T, path: string): any {
   }, obj as any);
 }
 
-export { Table };
 export default Table;

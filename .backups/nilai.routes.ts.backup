@@ -1,0 +1,11 @@
+import express from 'express';
+import { authMiddleware } from '../middleware/auth';
+
+const router = express.Router();
+
+// Placeholder for nilai routes
+router.get('/', authMiddleware(['admin', 'guru', 'siswa']), async (req, res) => {
+  res.status(200).json({ message: 'Nilai routes' });
+});
+
+export default router;

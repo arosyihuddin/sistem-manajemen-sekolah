@@ -1,0 +1,11 @@
+import express from 'express';
+import { authMiddleware } from '../middleware/auth';
+
+const router = express.Router();
+
+// Placeholder for pembayaran routes
+router.get('/', authMiddleware(['admin', 'staff']), async (req, res) => {
+  res.status(200).json({ message: 'Pembayaran routes' });
+});
+
+export default router;

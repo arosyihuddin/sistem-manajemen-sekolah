@@ -1,0 +1,11 @@
+import express from 'express';
+import { authMiddleware } from '../middleware/auth';
+
+const router = express.Router();
+
+// Placeholder for absensi routes
+router.get('/', authMiddleware(['admin', 'guru']), async (req, res) => {
+  res.status(200).json({ message: 'Absensi routes' });
+});
+
+export default router;
