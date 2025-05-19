@@ -1,0 +1,200 @@
+import axios from 'axios';
+
+const API_URL = '/api';
+
+// Interfaces
+export interface Siswa {
+  id: number;
+  nis: string;
+  nama: string;
+  tempatLahir?: string;
+  tanggalLahir?: string;
+  jenisKelamin?: string;
+  agama?: string;
+  alamat?: string;
+  telepon?: string;
+  email?: string;
+  namaAyah?: string;
+  namaIbu?: string;
+  pekerjaanAyah?: string;
+  pekerjaanIbu?: string;
+  teleponOrtu?: string;
+  alamatOrtu?: string;
+  tahunMasuk?: number;
+  foto?: string;
+  dokumenAkta?: string;
+  status: boolean;
+  kelas?: {
+    id: number;
+    nama: string;
+  };
+  user?: {
+    id: string;
+    username: string;
+    email: string;
+  };
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface SiswaCreateInput {
+  nis: string;
+  nama: string;
+  tempatLahir?: string;
+  tanggalLahir?: string;
+  jenisKelamin?: string;
+  agama?: string;
+  alamat?: string;
+  telepon?: string;
+  email?: string;
+  namaAyah?: string;
+  namaIbu?: string;
+  pekerjaanAyah?: string;
+  pekerjaanIbu?: string;
+  teleponOrtu?: string;
+  alamatOrtu?: string;
+  tahunMasuk?: number;
+  kelas?: {
+    id: number;
+  };
+  user?: {
+    username: string;
+    password: string;
+    email?: string;
+  };
+}
+
+// Get all siswa with filters
+export const getSiswaAll = async (
+  page = 1,
+  limit = 10,
+  search?: string,
+  status?: boolean,
+  kelasId?: number
+) => {
+  const params = new URLSearchParams();
+  params.append('page', page.toString());
+  params.append('limit', limit.toString());
+  
+  if (search) params.append('search', search);
+  if (status !== undefined) params.append('status', status.toString());
+  if (kelasId) params.append('kelasId', kelasId.toString());
+  
+  const response = await axios.get(`${API_URL}/siswa?${params.toString()}`, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem('token')}`
+    }
+  });
+  
+  return response.data;
+};
+
+// Get siswa by ID
+export const getSiswaById = async (id: number) => {
+  const response = await axios.get(`${API_URL}/siswa/${id}`, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem('token')}`
+    }
+  });
+  
+  return response.data;
+};
+
+// Get siswa by NIS
+export const getSiswaByNIS = async (nis: string) => {
+  const response = await axios.get(`${API_URL}/siswa/nis/${nis}`, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem('token')}`
+    }
+  });
+  
+  return response.data;
+};
+
+// Create siswa
+export const createSiswa = async (siswaData: SiswaCreateInput) => {
+  const response = await axios.post(`${API_URL}/siswa`, siswaData, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem('token')}`
+    }
+  });
+  
+  return response.data;
+};
+
+// Update siswa
+export const updateSiswa = async (id: number, siswaData: Partial<SiswaCreateInput>) => {
+  const response = await axios.put(`${API_URL}/siswa/${id}`, siswaData, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem('token')}`
+    }
+  });
+  
+  return response.data;
+};
+
+// Delete siswa (soft delete)
+export const deleteSiswa = async (id: number) => {
+  const response = await axios.delete(`${API_URL}/siswa/${id}`, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem('token')}`
+    }
+  });
+  
+  return response.data;
+};
+
+// Restore siswa
+export const restoreSiswa = async (id: number) => {
+  const response = await axios.post(`${API_URL}/siswa/${id}/restore`, {}, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem('token')}`
+    }
+  });
+  
+  return response.data;
+};
+
+// Upload foto siswa
+export const uploadFoto = async (id: number, formData: FormData) => {
+  const response = await axios.post(`${API_URL}/siswa/${id}/upload-foto`, formData, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
+      'Content-Type': 'multipart/form-data'
+    }
+  });
+  
+  return response.data;
+};
+
+// Upload dokumen akta siswa
+export const uploadDokumenAkta = async (id: number, formData: FormData) => {
+  const response = await axios.post(`${API_URL}/siswa/${id}/upload-dokumen-akta`, formData, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem('token')}`,
+      'Content-Type': 'multipart/form-data'
+    }
+  });
+  
+  return response.data;
+};
+
+// Create user for siswa
+export const createUserForSiswa = async (
+  id: number, 
+  username: string, 
+  password: string, 
+  email?: string
+) => {
+  const response = await axios.post(`${API_URL}/siswa/${id}/create-user`, {
+    username,
+    password,
+    email
+  }, {
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem('token')}`
+    }
+  });
+  
+  return response.data;
+};

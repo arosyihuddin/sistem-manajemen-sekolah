@@ -115,13 +115,6 @@ function App() {
             </RoleRoute>
           } />
           
-          {/* Mata Pelajaran management routes (for admin) */}
-          <Route path="mata-pelajaran" element={
-            <RoleRoute allowedRoles={['admin']}>
-              <MataPelajaranListPage />
-            </RoleRoute>
-          } />
-          
           {/* Siswa dashboard route */}
           <Route path="siswa-dashboard" element={
             <RoleRoute allowedRoles={['siswa']}>
