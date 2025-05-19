@@ -33,22 +33,27 @@ export const useAuthStore = create<AuthState>()(
       login: async (username: string, password: string) => {
         try {
           set({ isLoading: true, error: null });
-          const response = await authApi.login(username, password);
-          const { data } = response;
-          
-          localStorage.setItem('token', data.token);
-          
-          set({
-            user: {
-              id: data.id,
-              username: data.username,
-              email: data.email,
-              role: data.role
-            },
-            token: data.token,
-            isAuthenticated: true,
-            isLoading: false
-          });
+          const apiResponse = await authApi.login(username, password);
+          const data = apiResponse.data; // Ambil data dari apiResponse
+
+          if (data && data.token) {
+            localStorage.setItem('token', data.token);
+            set({
+              user: {
+                id: data.id,
+                username: data.username,
+                email: data.email,
+                role: data.role
+              },
+              token: data.token,
+              isAuthenticated: true,
+              isLoading: false
+            });
+          } else {
+            // Log error jika respons tidak sesuai harapan
+            console.error('Invalid login response:', apiResponse);
+            throw new Error('Login response did not include token or user data');
+          }
         } catch (error: any) {
           set({
             isLoading: false,
@@ -61,22 +66,26 @@ export const useAuthStore = create<AuthState>()(
       register: async (username: string, password: string, email: string, role?: string) => {
         try {
           set({ isLoading: true, error: null });
-          const response = await authApi.register(username, password, email, role);
-          const { data } = response;
-          
-          localStorage.setItem('token', data.token);
-          
-          set({
-            user: {
-              id: data.id,
-              username: data.username,
-              email: data.email,
-              role: data.role
-            },
-            token: data.token,
-            isAuthenticated: true,
-            isLoading: false
-          });
+          const apiResponse = await authApi.register(username, password, email, role);
+          const data = apiResponse.data; // Ambil data dari apiResponse
+
+          if (data && data.token) {
+            localStorage.setItem('token', data.token);
+            set({
+              user: {
+                id: data.id,
+                username: data.username,
+                email: data.email,
+                role: data.role
+              },
+              token: data.token,
+              isAuthenticated: true,
+              isLoading: false
+            });
+          } else {
+            console.error('Invalid registration response:', apiResponse);
+            throw new Error('Registration response did not include token or user data');
+          }
         } catch (error: any) {
           set({
             isLoading: false,
@@ -124,19 +133,24 @@ export const useAuthStore = create<AuthState>()(
         
         try {
           set({ isLoading: true });
-          const response = await authApi.getMe();
-          const { data } = response;
-          
-          set({
-            user: {
-              id: data.id,
-              username: data.username,
-              email: data.email,
-              role: data.role
-            },
-            isAuthenticated: true,
-            isLoading: false
-          });
+          const apiResponse = await authApi.getMe();
+          const data = apiResponse.data; // Ambil data dari apiResponse
+
+          if (data && data.id) { // Check if user data is valid
+            set({
+              user: {
+                id: data.id,
+                username: data.username,
+                email: data.email,
+                role: data.role
+              },
+              isAuthenticated: true,
+              isLoading: false
+            });
+          } else {
+            console.error('Invalid getMe response:', apiResponse);
+            throw new Error('GetMe response did not include valid user data');
+          }
         } catch (error) {
           localStorage.removeItem('token');
           set({
