@@ -1,4 +1,4 @@
-import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/20/solid';
+import { ChevronLeftIcon, ChevronRightIcon } from 'lucide-react';
 import { classNames } from '@/lib/utils';
 
 interface PaginationProps {
