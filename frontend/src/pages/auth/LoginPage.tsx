@@ -29,9 +29,12 @@ const LoginPage = () => {
   const onSubmit = async (data: LoginFormData) => {
     try {
       setIsLoading(true);
-      await login(data.username, data.password);
+      console.log('Attempting to login with:', data);
+      const result = await login(data.username, data.password);
+      console.log('Login result:', result);
       toast.success('Login berhasil');
     } catch (error: any) {
+      console.error('Login error:', error);
       toast.error(error.response?.data?.message || 'Login gagal');
     } finally {
       setIsLoading(false);
