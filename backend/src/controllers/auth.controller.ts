@@ -28,6 +28,7 @@ export class AuthController {
   private authService = new AuthService();
 
   login = async (req: Request, res: Response, next: NextFunction) => {
+    Logger.info('Attempting login with:', req.body); // Tambahkan log di sini
     try {
       const { username, password } = loginSchema.parse(req.body);
       
@@ -35,12 +36,14 @@ export class AuthController {
       const userAgent = req.headers['user-agent'];
       
       const result = await this.authService.login(username, password, ipAddress, userAgent);
+      Logger.info('Login successful:', result);
       
       res.status(200).json({
         status: 'success',
         data: result,
       });
     } catch (error) {
+      Logger.error('Login error:', error); // Tambahkan log di sini
       if (error instanceof z.ZodError) {
         return res.status(400).json({
           status: 'error',
